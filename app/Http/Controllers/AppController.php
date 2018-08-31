@@ -14,29 +14,37 @@ class AppController extends Controller
 
     public function desa(Village $village)
     {
-        return Village::with('district.regency.province')
+        $village = Village::with('district.regency.province')
                         ->find($village)
-                        ->first();
+                        ->all();
+
+        return $village;
     }
 
     public function kecamatan(District $district)
     {
-        return District::with('villages', 'regency.province')
+        $district = District::with('villages', 'regency.province')
                         ->find($district)
-                        ->first();
+                        ->all();
+
+        return $district;
     }
 
     public function kabupaten(Regency $regency)
     {
-        return Regency::with('districts.villages', 'province')
+        $regency = Regency::with('districts.villages', 'province')
                         ->find($regency)
-                        ->first();
+                        ->all();
+        
+        return $regency;
     }
 
     public function provinsi(Province $province)
     {
-        return Province::with('regencies.districts.villages')
+        $province = Province::with('regencies.districts.villages')
                         ->find($province)
-                        ->first();
+                        ->all();
+        
+        return $province;
     }
 }
